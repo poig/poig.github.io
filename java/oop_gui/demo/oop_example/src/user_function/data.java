@@ -138,10 +138,12 @@ public class data {
             e.printStackTrace();
         }
     }
+    
+    String UserCommentFile = "userdata/comments.txt";
 
-    public static void user_comment(String comments) {
+    public void user_comment(String comments) {
 
-        File usercomment = new File("userdata/comments.txt");
+        File usercomment = new File(UserCommentFile);
         try {
             RandomAccessFile writer = new RandomAccessFile(usercomment, "rw");
 
@@ -155,7 +157,7 @@ public class data {
 
     public String read_user_comment() {
         StringBuilder sb = new StringBuilder();
-        try (RandomAccessFile reader = new RandomAccessFile(new File("userdata/comments.txt"), "r")) {
+        try (RandomAccessFile reader = new RandomAccessFile(new File(UserCommentFile), "r")) {
             //}
             //try (BufferedReader reader = new BufferedReader(new FileReader("dictionary.txt"))) {
             String line = reader.readLine();
@@ -183,6 +185,42 @@ public class data {
     public void quiz_edit() {
         // for admit changes
     }
+    
+    String[] files = {"articles/sustainable_fashion.txt", "articles/sustainable_living.txt", "articles/global_warming.txt"};
+    String[] content = {"", "", ""};
+    
+    public String ReadArticle() {
+        StringBuffer buffer1 = new StringBuffer();
+        RandomAccessFile r1 = new RandomAccessFile(new File(files[0]), "rw");
+        while (r1.getFilePointer() < r1.length()) {
+            buffer1.append(r1.readLine() + System.lineSeparator());
+        }
+        content[0] = buffer1.toString();
+
+        StringBuffer buffer2 = new StringBuffer();
+        RandomAccessFile r2 = new RandomAccessFile(new File(files[1]), "rw");
+        while (r2.getFilePointer() < r2.length()) {
+            buffer2.append(r2.readLine() + System.lineSeparator());
+        }
+        content[1] = buffer2.toString();
+
+        StringBuffer buffer3 = new StringBuffer();
+        RandomAccessFile r3 = new RandomAccessFile(new File(files[2]), "rw");
+        while (r3.getFilePointer() < r3.length()) {
+            buffer3.append(r3.readLine() + System.lineSeparator());
+        }
+        content[2] = buffer3.toString();
+        
+        return content;
+    }
+    public void SaveArticle(String f, String s) throws IOException {
+        PrintWriter out = new PrintWriter(f);
+        out.println(s);
+        out.close();
+
+    }
+    
+    
 
     public static void main(String[] args) {
         //new user_login("what", "123");

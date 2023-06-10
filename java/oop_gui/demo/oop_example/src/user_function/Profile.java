@@ -141,6 +141,7 @@ public class Profile extends JFrame {
         constraints.gridx = 3;
         constraints.gridy = 3;
         constraints.gridwidth = 3;
+        constraints.gridheight = 2;
         JTextArea textField_for_bio = new JTextArea();
         textField_for_bio.setText("   ");
         textField_for_bio.setEditable(false);
@@ -148,7 +149,7 @@ public class Profile extends JFrame {
         profile.add(textField_for_bio, constraints);
 
         constraints.gridx = 0;
-        constraints.gridy = 4;
+        constraints.gridy = 5;
         constraints.gridwidth = 2;
         JButton edit_button = new JButton("Edit");
         profile.add(edit_button, constraints);
@@ -156,7 +157,7 @@ public class Profile extends JFrame {
         edit_button.setFont(font);
 
         constraints.gridx = 3;
-        constraints.gridy = 4;
+        constraints.gridy = 5;
         constraints.gridwidth = 3;
         save_button = new JButton("Save");
         profile.add(save_button, constraints);

@@ -13,6 +13,9 @@ import user_function.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class menu extends JPanel {
 
@@ -52,17 +55,23 @@ public class menu extends JPanel {
         ArticleButton.setFont(font);
         menu.add(ArticleButton, constraints);
         ArticleButton.addActionListener((ActionEvent e) -> {
-            //do something
-            ArticleButton.setEnabled(false);
-            Article article = new Article(width, height);
-
-            // Add a WindowListener to enable the button when the new JFrame is closed
-            article.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) {
-                    ArticleButton.setEnabled(true);
-                }
-            });
+            try {
+                //do something
+                ArticleButton.setEnabled(false);
+                Article article = new Article(width, height);
+                //menu.setVisible(false);
+                
+                // Add a WindowListener to enable the button when the new JFrame is closed
+                article.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        ArticleButton.setEnabled(true);
+                        //menu.setVisible(true);
+                    }
+                });
+            } catch (IOException ex) {
+                Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         
 
@@ -174,7 +183,7 @@ public class menu extends JPanel {
                 // Add the submitted feedback to the text area
                 if (feedback != null && feedback.length() > 1) {
                     feedbackArea.append(username + " :  " + feedback + "\n");
-                    data.user_comment(feedbackArea.getText());
+                    new data().user_comment(feedbackArea.getText());
                     feedbackArea.setText(new data().read_user_comment());
                 }
             }
