@@ -48,6 +48,7 @@ public class data {
 
                 String[] parts = line.split(": ");
                 String[] user_parts = parts[1].split(";");
+                // possible broblem in here is there is double \n exist in txt
                 empty_user.put(parts[0], new user_profile(user_parts[0], user_parts[1], user_parts[2], user_parts[3]));
             }
         } catch (IOException e) {
@@ -117,7 +118,7 @@ public class data {
                 RandomAccessFile writer = new RandomAccessFile(userdata, "rw");
 
                 for (Map.Entry<String, user_profile> entry : sample_user.entrySet()) {
-                    writer.writeBytes(entry.getKey() + ": " + entry.getValue().password + "; " + entry.getValue().gmail + "; " + entry.getValue().bio + "\n");
+                    writer.writeBytes(entry.getKey() + ": " + entry.getValue().password + "; " + entry.getValue().gmail + "; " + entry.getValue().bio + "false"+ "\n");
                 }
                 System.out.println("create and write user file");
 
@@ -126,7 +127,7 @@ public class data {
                 try (FileWriter writer = new FileWriter("userdata/dictionary.txt", true)) {
 
                     for (Map.Entry<String, user_profile> entry : sample_user.entrySet()) {
-                        writer.write(entry.getKey() + ": " + entry.getValue().password + "; " + entry.getValue().gmail + "; " + entry.getValue().bio + "\n");
+                        writer.write(entry.getKey() + ": " + entry.getValue().password + "; " + entry.getValue().gmail + "; " + entry.getValue().bio + "false" + "\n");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

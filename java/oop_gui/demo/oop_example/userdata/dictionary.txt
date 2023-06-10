@@ -1,2 +1,3 @@
 admin: admin; admin@gmail.com; ; true
 poig: poig; poiggmailcom; ; false
+miao: miao; miao; ; false
