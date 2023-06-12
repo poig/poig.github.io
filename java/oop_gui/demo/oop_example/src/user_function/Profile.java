@@ -37,6 +37,12 @@ import java.awt.event.*;
  */
 public class Profile extends JFrame {
 
+    private JLabel format_txt(String txt) {
+        JLabel msg = new JLabel(txt);
+        msg.setFont(font);
+        return msg;
+    }
+
     // Declare the components
     private ArrayList<String> ids;
     private JComboBox<String> chCourse;
@@ -53,13 +59,15 @@ public class Profile extends JFrame {
      * @param width
      * @param height
      */
-    public Profile(int width, int height) {
+    public Profile(int width, int height, String Username) {
 
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
+
+        String[] user_info = new data().user_readout(Username);
 
         profile = new JFrame();
         profile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -78,9 +86,24 @@ public class Profile extends JFrame {
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.insets = new Insets(5, 5, 5, 5);
 
-        //button of name 
+        // save button
         constraints.gridx = 0;
         constraints.gridy = 0;
+        constraints.gridwidth = 5;
+        JTextField searchbar = new JTextField();
+        searchbar.setFont(font);
+        profile.add(searchbar, constraints);
+
+        constraints.gridx = 5;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        JButton searchbutton = new JButton("Search");
+        searchbutton.setFont(font);
+        profile.add(searchbutton, constraints);
+
+        //button of name 
+        constraints.gridx = 0;
+        constraints.gridy = 1;
         constraints.gridwidth = 2;
         JLabel naming_label = new JLabel("Name: ");
         naming_label.setFont(font);
@@ -88,48 +111,31 @@ public class Profile extends JFrame {
 
         //the display of the name column also the place to be edit 
         constraints.gridx = 3;
-        constraints.gridy = 0;
+        constraints.gridy = 1;
         constraints.gridwidth = 2;
         textField_for_naming = new JTextField(10);
-        textField_for_naming.setText("admin");
+        textField_for_naming.setText(Username);
         textField_for_naming.setFont(font);
         textField_for_naming.setEditable(false);
         profile.add(textField_for_naming, constraints);
 
         // Email
         constraints.gridx = 0;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         constraints.gridwidth = 2;
         JLabel lblemail = new JLabel("Email: ");
         lblemail.setFont(font);
         profile.add(lblemail, constraints);
 
         constraints.gridx = 3;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         constraints.gridwidth = 2;
         JTextField textField_for_email = new JTextField(20);
-        textField_for_email.setText("admin@email.com");
+        textField_for_email.setText(user_info[1]);
         textField_for_email.setEditable(false);
         textField_for_email.setFont(font);
         profile.add(textField_for_email, constraints);
-        
-        // achivement
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.gridwidth = 2;
-        JLabel lblAchv = new JLabel("Achievement: ");
-        lblAchv.setFont(font);
-        profile.add(lblAchv, constraints);
 
-        constraints.gridx = 3;
-        constraints.gridy = 2;
-        constraints.gridwidth = 2;
-        JTextField textField_for_achievement = new JTextField(10);
-        textField_for_achievement.setText("sample");
-        textField_for_achievement.setEditable(false);
-        textField_for_achievement.setFont(font);
-        profile.add(textField_for_achievement, constraints);
-        
         //BIO
         constraints.gridx = 0;
         constraints.gridy = 3;
@@ -142,11 +148,19 @@ public class Profile extends JFrame {
         constraints.gridy = 3;
         constraints.gridwidth = 3;
         constraints.gridheight = 2;
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setPreferredSize(new Dimension(width / 5, width / 5));
+
         JTextArea textField_for_bio = new JTextArea();
-        textField_for_bio.setText("   ");
+        textField_for_bio.setText(user_info[2].replace("|", "\n"));
+        textField_for_bio.setLineWrap(true);
+        textField_for_bio.setWrapStyleWord(true);
+
         textField_for_bio.setEditable(false);
         textField_for_bio.setFont(font);
-        profile.add(textField_for_bio, constraints);
+
+        panel.add(new JScrollPane(textField_for_bio), BorderLayout.CENTER);
+        profile.add(panel, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 5;
@@ -164,7 +178,33 @@ public class Profile extends JFrame {
         profile.setVisible(true);
         save_button.setFont(font);
         save_button.setEnabled(false);
-        
+
+        searchbutton.addActionListener((ActionEvent e) -> {
+            // get username profile
+            String[] userinfo = new data().user_readout(searchbar.getText());
+            //settxt
+            if (userinfo[0] == "None") {
+                JOptionPane.showMessageDialog(profile, format_txt("user not exist"));
+            } else {
+                textField_for_naming.setText(userinfo[0]);
+                textField_for_email.setText(userinfo[1]);
+                textField_for_bio.setText(userinfo[2].replace("|", "\n"));
+
+                // button only avaliable for admin
+                System.out.println(userinfo[3] + " ok");
+                if ("admin".equals(userinfo[3])) {
+                    edit_button.setEnabled(true);
+                    save_button.setEnabled(false);
+                } else if (searchbar.getText().equals(Username)) {
+                    edit_button.setEnabled(true);
+                    save_button.setEnabled(false);
+                } else if (userinfo[3] != "admin" && searchbar.getText() != Username) {
+                    edit_button.setEnabled(false);
+                    save_button.setEnabled(false);
+                }
+            }
+
+        });
 
         edit_button.addActionListener((ActionEvent e) -> {
             // do something
@@ -175,19 +215,34 @@ public class Profile extends JFrame {
             textField_for_naming.setEditable(true);
             textField_for_email.setEditable(true);
             textField_for_bio.setEditable(true);
-            textField_for_achievement.setEditable(true);
 
         });
 
         save_button.addActionListener((ActionEvent e) -> {
-            // do something
+
+            // if statement check sentence without : or ; and replace \n    
+            if (textField_for_bio.getText().contains(";") || textField_for_bio.getText().contains(":") || textField_for_bio.getText().contains("|") || textField_for_bio.getText().contains("\\")) {
+                JOptionPane.showMessageDialog(profile, format_txt("Bio can't include |, : and ;"));
+            } else {
+
+                // do something
+                String result = new data().profile_save(Username, textField_for_naming.getText(), textField_for_email.getText(), textField_for_bio.getText().replace("\n", "|"));
+                if (result == "email exist") {
+                    JOptionPane.showMessageDialog(profile, format_txt("Email already exist"));
+                } else if (result == "email format") {
+                    JOptionPane.showMessageDialog(profile, format_txt("please confirm your email"));
+                } else if (result == "username exist") {
+                    JOptionPane.showMessageDialog(profile, format_txt("username already exist"));
+                }
+
+                System.out.println(result);
+            }
             // disable the button when the new JFrame is opened
             save_button.setEnabled(false);
 
             textField_for_naming.setEditable(false);
             textField_for_email.setEditable(false);
             textField_for_bio.setEditable(false);
-            textField_for_achievement.setEditable(false);
             edit_button.setEnabled(true);
 
         });
@@ -210,6 +265,6 @@ public class Profile extends JFrame {
         /*SwingUtilities.invokeLater(() -> {
             
         });*/
-        new Profile(1000, 1200);
+        new Profile(1000, 1200, "poig");
     }
 }

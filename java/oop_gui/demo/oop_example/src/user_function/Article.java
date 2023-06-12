@@ -1,4 +1,5 @@
 package user_function;
+
 import main.main;
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 
 public class Article {
+
     // add to main: public static String inp1, inp2, inp3;
     // add to main: public static int count=1;
     String[] files = {"articles/sustainable_fashion.txt", "articles/sustainable_living.txt", "articles/global_warming.txt"};
@@ -22,8 +24,14 @@ public class Article {
     }
 
     JFrame f;
-    
-    public Article(int width, int height)throws IOException {
+
+    public Article(int width, int height) throws IOException {
+
+        if (!new File(files[0]).exists()) {
+            File article_folder = new File(files[0]);
+            article_folder.getParentFile().mkdirs();
+        }
+
         StringBuffer buffer1 = new StringBuffer();
         RandomAccessFile r1 = new RandomAccessFile(new File(files[0]), "rw");
         while (r1.getFilePointer() < r1.length()) {
@@ -59,7 +67,7 @@ public class Article {
         f.setLocationRelativeTo(null);
 
         f.setTitle("Articles");
-        Font font = new Font("Arial", Font.PLAIN, width / 40);
+        Font font = new Font("Arial", Font.PLAIN, width / 30);
 
         JTabbedPane tp = new JTabbedPane();
         JPanel ap = new JPanel(new BorderLayout());
@@ -92,9 +100,11 @@ public class Article {
         tp.add("article 1", sp1);
         tp.add("article 2", sp2);
         tp.add("article 3", sp3);
+        tp.setFont(font);
         ap.add(tp, BorderLayout.NORTH);
 
         JButton back = new JButton("Back to Main Menu");
+        back.setFont(font);
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,11 +134,12 @@ public class Article {
         f.add(ap);
         f.setVisible(true);
     }
+
     public void addWindowListener(WindowListener listener) {
         this.f.addWindowListener(listener);
     }
-    
-    public static void main(String[] args)throws IOException {
+
+    public static void main(String[] args) throws IOException {
         new Article(1600, 600);
     }
 }

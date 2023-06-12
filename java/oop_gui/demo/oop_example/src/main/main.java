@@ -43,7 +43,7 @@ public class main {
 
         File userdata = new File("userdata/dictionary.txt");
         if (!userdata.exists()) {
-            data.user_register("admin", "admin", "admin@gmail.com");
+            data.user_register("admin", "admin", "admin@gmail.com", "admin");
         }
         
         

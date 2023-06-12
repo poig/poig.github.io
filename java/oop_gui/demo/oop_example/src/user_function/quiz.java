@@ -610,13 +610,19 @@ public class quiz extends JPanel {
         nextButton.addActionListener((ActionEvent e) -> {
             // display registration screen
             if (optionsGroup.getSelection() == null) {
-                JOptionPane.showMessageDialog(this, "where is your answer!");
+                JLabel empty_msg = new JLabel("Where is your answer!");
+                empty_msg.setFont(font);
+                JOptionPane.showMessageDialog(this, empty_msg);
             } else {
                 if (optionsGroup.getSelection().getActionCommand().equals(answers[ques_type][currentQuestion])) {
-                    JOptionPane.showMessageDialog(quiz, "correct!");
+                    JLabel correct_msg = new JLabel("correct!");
+                    correct_msg.setFont(font);
+                    JOptionPane.showMessageDialog(quiz, correct_msg);
                     score++;
                 } else {
-                    JOptionPane.showMessageDialog(quiz, "you fucked up, Next!!\n" + "the answer is " + answers[ques_type][currentQuestion]);
+                    JLabel wrong_msg = new JLabel("Incorrect answer\n" + "the answer is " + answers[ques_type][currentQuestion]);
+                    wrong_msg.setFont(font);
+                    JOptionPane.showMessageDialog(quiz, wrong_msg);
                 }
                 currentQuestion++;
                 if (currentQuestion < score_lenght) {
@@ -625,7 +631,8 @@ public class quiz extends JPanel {
                     quiz.revalidate();
                     quiz.repaint();
                 } else {
-                    JOptionPane.showMessageDialog(quiz, "End of quiz!\n" + "your score: " + score);
+                    JLabel end_msg = new JLabel("End of quiz!\n" + "your score: " + score);
+                    JOptionPane.showMessageDialog(quiz, end_msg);
 
                     if ((score / score_lenght) > (score * 0.6) / score_lenght) {
                         // record badget to the user accordingly

@@ -9,12 +9,19 @@ import java.util.List;
 import user_function.data;
 
 public class RegisterPanel extends JPanel {
+    
+    Font font;
+    private JLabel format_txt(String txt) {
+        JLabel msg = new JLabel(txt);
+        msg.setFont(font);
+        return msg;
+    }
 
     public RegisterPanel(JFrame frame, int width) {
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         // font-size
-        Font font = new Font("Arial", Font.PLAIN, width / 40);
+        font = new Font("Arial", Font.PLAIN, width / 30);
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.insets = new Insets(5, 5, 5, 5);
@@ -100,25 +107,25 @@ public class RegisterPanel extends JPanel {
                 }
 
                 if (username.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Please Enter your username.");
+                    JOptionPane.showMessageDialog(frame, format_txt("Please Enter your username."));
                 } else if (gmail.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Please Enter your Email.");
+                    JOptionPane.showMessageDialog(frame, format_txt("Please Enter your Email."));
                 } else if (!gmail.contains("@".replaceAll("[^\\p{Alnum}]", ""))) {
-                    JOptionPane.showMessageDialog(frame, "Please Enter correct Email format.");
+                    JOptionPane.showMessageDialog(frame, format_txt("Please Enter correct Email format."));
                 } else if (password.length == 0) {
-                    JOptionPane.showMessageDialog(frame, "Please Enter Your password.");
+                    JOptionPane.showMessageDialog(frame, format_txt("Please Enter Your password."));
                 } else if (ConfirmPassword.length == 0) {
-                    JOptionPane.showMessageDialog(frame, "Please confirm password.");
+                    JOptionPane.showMessageDialog(frame, format_txt("Please confirm password."));
                 } else if (!Arrays.equals(password, ConfirmPassword)) {
-                    JOptionPane.showMessageDialog(frame, "Check your confirm password");
+                    JOptionPane.showMessageDialog(frame, format_txt("Check your confirm password"));
                 } else {
                     if (!result[0].equals("None")) {
-                        JOptionPane.showMessageDialog(frame, "Username already exist.");
+                        JOptionPane.showMessageDialog(frame, format_txt("Username already exist."));
                     } else if (gmail_list.contains(gmail)) {
-                        JOptionPane.showMessageDialog(frame, "Gmail already exist.");
+                        JOptionPane.showMessageDialog(frame, format_txt("Gmail already exist."));
                     } else {
-                        data.user_register(username, new String(password), gmail);
-                        JOptionPane.showMessageDialog(frame, "Congrat!!! You Registered, return to login page.");
+                        data.user_register(username, new String(password), gmail, "user");
+                        JOptionPane.showMessageDialog(frame, format_txt("Congrat!!! You Registered, return to login page."));
                         // display login screen
                         frame.getContentPane().removeAll();
                         new LoginPanel(frame, width);

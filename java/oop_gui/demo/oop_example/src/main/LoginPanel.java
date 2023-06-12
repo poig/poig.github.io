@@ -9,11 +9,18 @@ import user_function.data;
 
 
 public class LoginPanel {
+    Font warningfont;
+    private JLabel format_txt(String txt) {
+        JLabel msg = new JLabel(txt);
+        msg.setFont(warningfont);
+        return msg;
+    }
+    
     public LoginPanel(JFrame frame, int width){
         frame.setTitle("Login Form"); // set title here
         frame.setLayout(new GridBagLayout());
         // font-size
-        Font font = new Font("Arial", Font.PLAIN, width/40);
+        Font font = new Font("Arial", Font.PLAIN, width/30);
         
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -54,19 +61,21 @@ public class LoginPanel {
             System.out.println("Username: " + username);
             System.out.println("Password: " + new String(password));
             
+            warningfont = new Font("Arial", Font.PLAIN, width/40);
+            
             // todo: the login logic happen here
             String result = new data().user_login(username, new String(password));
                     //(username.equals("admin") && new String(password).equals("admin")) 
             if (username.isEmpty() || password.length == 0){
-                JOptionPane.showMessageDialog(frame, "please enter your username or password");
+                JOptionPane.showMessageDialog(frame, format_txt("please enter your username or password"));
             } else if ("pass".equals(result)){
                 // open new page
                 frame.dispose();
                 new menu(username);
             } else if ("error".equals(result)) {
-                JOptionPane.showMessageDialog(frame, "Incorrect username or password");
+                JOptionPane.showMessageDialog(frame, format_txt("Incorrect username or password"));
             } else if ("none".equals(result)){
-                JOptionPane.showMessageDialog(frame, "username don't exist");
+                JOptionPane.showMessageDialog(frame, format_txt("username don't exist"));
             }
         });
         // create register button

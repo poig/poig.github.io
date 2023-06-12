@@ -45,13 +45,13 @@ public class CC_Calculator {
         // for user-log
         System.out.println("Enter profile");
         width = (int) (width * 0.5);
-        height = (int) (height * 0.6);
+        height = (int) (height * 0.8);
         calculator.setSize(width, height);
         calculator.setTitle("Calculator"); // set title here
 
         calculator.setLayout(new GridBagLayout());
         // font-size
-        Font font = new Font("Arial", Font.PLAIN, width / 40);
+        Font font = new Font("Arial", Font.PLAIN, width / 25);
 
         // setup constrain
         GridBagConstraints constraints = new GridBagConstraints();

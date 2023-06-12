@@ -23,14 +23,14 @@ class user_profile {
 
     String password;
     String gmail;
-    String bio;
     String admin;
+    String bio;
 
-    user_profile(String password, String gmail, String bio, String admin) {
+    user_profile(String password, String gmail, String admin, String bio) {
         this.password = password;
         this.gmail = gmail;
-        this.bio = bio;
         this.admin = admin;
+        this.bio = bio;
     }
 }
 
@@ -47,7 +47,7 @@ public class data {
             while ((line = reader.readLine()) != null) {
 
                 String[] parts = line.split(": ");
-                String[] user_parts = parts[1].split(";");
+                String[] user_parts = parts[1].split("; ");
                 // possible broblem in here is there is double \n exist in txt
                 empty_user.put(parts[0], new user_profile(user_parts[0], user_parts[1], user_parts[2], user_parts[3]));
             }
@@ -102,12 +102,12 @@ public class data {
 
     ;
 
-    public static void user_register(String username, String password, String gmail) {
+    public static void user_register(String username, String password, String gmail, String admin) {
         // for user register
 
         // create data structure
         Map<String, user_profile> sample_user = new HashMap<>();
-        sample_user.put(username, new user_profile(password, gmail, "","false"));
+        sample_user.put(username, new user_profile(password, gmail, admin, ""));
         //sample_user.put("poig", new user_profile("poig", "poig@gmail.com", "so fucked"));
 
         File userdata = new File("userdata/dictionary.txt");
@@ -118,7 +118,7 @@ public class data {
                 RandomAccessFile writer = new RandomAccessFile(userdata, "rw");
 
                 for (Map.Entry<String, user_profile> entry : sample_user.entrySet()) {
-                    writer.writeBytes(entry.getKey() + ": " + entry.getValue().password + "; " + entry.getValue().gmail + "; " + entry.getValue().bio + "false"+ "\n");
+                    writer.writeBytes(entry.getKey() + ": " + entry.getValue().password + "; " + entry.getValue().gmail + "; " + entry.getValue().admin + "; " + entry.getValue().bio + "\n");
                 }
                 System.out.println("create and write user file");
 
@@ -127,7 +127,7 @@ public class data {
                 try (FileWriter writer = new FileWriter("userdata/dictionary.txt", true)) {
 
                     for (Map.Entry<String, user_profile> entry : sample_user.entrySet()) {
-                        writer.write(entry.getKey() + ": " + entry.getValue().password + "; " + entry.getValue().gmail + "; " + entry.getValue().bio + "false" + "\n");
+                        writer.write(entry.getKey() + ": " + entry.getValue().password + "; " + entry.getValue().gmail + "; " + entry.getValue().admin + "; " + entry.getValue().bio + "\n");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -138,7 +138,7 @@ public class data {
             e.printStackTrace();
         }
     }
-    
+
     String UserCommentFile = "userdata/comments.txt";
 
     public void user_comment(String comments) {
@@ -161,7 +161,7 @@ public class data {
             //}
             //try (BufferedReader reader = new BufferedReader(new FileReader("dictionary.txt"))) {
             String line = reader.readLine();
-            
+
             while (line != null) {
                 sb.append(line);
                 sb.append(System.lineSeparator());
@@ -173,10 +173,6 @@ public class data {
         }
         return "none";
     }
-    
-    public String edit_user(){
-        return "";
-    }
 
     public void quiz_read() {
         // for readout quiz
@@ -185,42 +181,68 @@ public class data {
     public void quiz_edit() {
         // for admit changes
     }
-    
-    String[] files = {"articles/sustainable_fashion.txt", "articles/sustainable_living.txt", "articles/global_warming.txt"};
-    String[] content = {"", "", ""};
-    
-    public String ReadArticle() {
-        StringBuffer buffer1 = new StringBuffer();
-        RandomAccessFile r1 = new RandomAccessFile(new File(files[0]), "rw");
-        while (r1.getFilePointer() < r1.length()) {
-            buffer1.append(r1.readLine() + System.lineSeparator());
-        }
-        content[0] = buffer1.toString();
 
-        StringBuffer buffer2 = new StringBuffer();
-        RandomAccessFile r2 = new RandomAccessFile(new File(files[1]), "rw");
-        while (r2.getFilePointer() < r2.length()) {
-            buffer2.append(r2.readLine() + System.lineSeparator());
-        }
-        content[1] = buffer2.toString();
+    public String profile_save(String oldname, String newname, String gmail, String bio) {
 
-        StringBuffer buffer3 = new StringBuffer();
-        RandomAccessFile r3 = new RandomAccessFile(new File(files[2]), "rw");
-        while (r3.getFilePointer() < r3.length()) {
-            buffer3.append(r3.readLine() + System.lineSeparator());
-        }
-        content[2] = buffer3.toString();
+        // get profile line number
+        Map empty_user = user_info();
+
+        // remove oldname
+        user_profile user_value = (user_profile) empty_user.remove(oldname);
         
-        return content;
-    }
-    public void SaveArticle(String f, String s) throws IOException {
-        PrintWriter out = new PrintWriter(f);
-        out.println(s);
-        out.close();
+        // check if user exist
+        user_profile userinfo = (user_profile) empty_user.get(newname);
+        if (userinfo == null) {
+            System.out.println("username not exist");
+
+            // format email list
+            List<String> gmail_list = new ArrayList();
+            for (Iterator it = empty_user.values().iterator(); it.hasNext();) {
+                user_profile profile = (user_profile) it.next();
+                gmail_list.add(profile.gmail);
+            }
+            /*
+            // Normalize the strings in the gmail_list
+            for (int i = 0; i < gmail_list.size(); i++) {
+                String normalized = gmail_list.get(i).replaceAll("[^\\p{Alnum}]", "");
+                gmail_list.set(i, normalized);
+            }
+
+            // Normalize the input string
+            gmail = gmail.replaceAll("[^\\p{Alnum}]", "");
+*/
+            if (gmail.contains("@")) {
+                if (!gmail_list.contains(gmail)) {
+                    try {
+                        empty_user.put(newname, new user_profile(user_value.password, gmail, user_value.admin, bio));
+                        // save
+                        File userdata = new File("userdata/dictionary.txt");
+                        RandomAccessFile writer = new RandomAccessFile(userdata, "rw");
+
+                        for (Iterator it = empty_user.entrySet().iterator(); it.hasNext();) {
+                            Map.Entry<String, user_profile> entry = (Map.Entry<String, user_profile>) it.next();
+                            writer.writeBytes(entry.getKey() + ": " + entry.getValue().password + "; " + entry.getValue().gmail + "; " + entry.getValue().admin + "; " + entry.getValue().bio + "\n");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    return "email exist";
+                }
+
+                return "saved";
+            } else {
+                return "email format";
+            }
+        } else {
+            return "username exist";
+        }
 
     }
-    
-    
+
+    public void add_achivement(String achive) {
+
+    }
 
     public static void main(String[] args) {
         //new user_login("what", "123");
