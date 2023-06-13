@@ -244,15 +244,5 @@ public class data {
 
     }
 
-    public static void main(String[] args) {
-        //new user_login("what", "123");
-        //String result = new data().user_login("admin", "admin");
-        //System.out.println(result);
-
-        new data().user_comment("test");
-        String result = new data().read_user_comment();
-        System.out.print(result);
-
-    }
 
 }

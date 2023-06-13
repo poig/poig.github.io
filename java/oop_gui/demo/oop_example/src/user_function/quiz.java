@@ -663,8 +663,5 @@ public class quiz extends JPanel {
         this.quiz.addWindowListener(listener);
     }
 
-    public static void main(String[] args) {
-        new quiz(1600, 600);
-    }
 
 }

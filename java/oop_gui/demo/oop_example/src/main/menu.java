@@ -42,6 +42,8 @@ public class menu extends JPanel {
         // font-size
         Font font = new Font("Arial", Font.PLAIN, width / 30);
 
+        String access = new data().user_readout(username)[3];
+
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.insets = new Insets(5, 5, 5, 5);
@@ -58,7 +60,7 @@ public class menu extends JPanel {
             try {
                 //do something
                 ArticleButton.setEnabled(false);
-                Article article = new Article(width, height);
+                Article article = new Article(width, height, access);
                 //menu.setVisible(false);
 
                 // Add a WindowListener to enable the button when the new JFrame is closed
@@ -192,7 +194,7 @@ public class menu extends JPanel {
         submitButton.addActionListener((ActionEvent e) -> {
             // Show an input dialog to get feedback from the user
             String feedback = JOptionPane.showInputDialog(menu, FeedbackLabel, "Comment", JOptionPane.PLAIN_MESSAGE);
-            
+
             // Add the submitted feedback to the text area
             if (feedback != null && feedback.length() > 1) {
                 feedbackArea.append(username + " :  " + feedback + "\n");
@@ -204,7 +206,6 @@ public class menu extends JPanel {
         bottom_panel.add(submitButton, BorderLayout.CENTER);
 
         // Adding a button for the admin 
-        String access = new data().user_readout(username)[3];
         if (access.equals("admin")) {
             feedbackArea.setEditable(true);
             //button of edit
@@ -227,9 +228,4 @@ public class menu extends JPanel {
         menu.setVisible(true);
         menu.setLocationRelativeTo(null); // Center the frame on the screen
     }
-
-    public static void main(String[] args) {
-        new menu("admin");
-    }
-
 }

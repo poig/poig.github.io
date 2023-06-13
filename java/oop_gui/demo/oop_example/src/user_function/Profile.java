@@ -256,15 +256,4 @@ public class Profile extends JFrame {
     public void addWindowListener(WindowListener listener) {
         this.profile.addWindowListener(listener);
     }
-
-    /**
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        /*SwingUtilities.invokeLater(() -> {
-            
-        });*/
-        new Profile(1000, 1200, "poig");
-    }
 }

@@ -205,7 +205,4 @@ public class CC_Calculator {
         resultArea.setText(result);
     }
 
-    public static void main(String[] args) {
-        new CC_Calculator(1280, 720);
-    }
 }
