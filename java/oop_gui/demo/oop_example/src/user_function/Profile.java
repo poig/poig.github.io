@@ -73,8 +73,8 @@ public class Profile extends JFrame {
         profile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         // for user-log
         System.out.println("Enter profile");
-        width = (int) (width * 0.5);
-        height = (int) (height * 0.5);
+        width = (int) (width * 0.6);
+        height = (int) (height * 0.6);
         profile.setSize(width, height);
         profile.setTitle("Profile"); // set title here
 
@@ -192,13 +192,13 @@ public class Profile extends JFrame {
 
                 // button only avaliable for admin
                 System.out.println(userinfo[3] + " ok");
-                if ("admin".equals(userinfo[3])) {
+                if ("admin".equals(user_info[3])) {
                     edit_button.setEnabled(true);
                     save_button.setEnabled(false);
                 } else if (searchbar.getText().equals(Username)) {
                     edit_button.setEnabled(true);
                     save_button.setEnabled(false);
-                } else if (userinfo[3] != "admin" && searchbar.getText() != Username) {
+                } else if (!"admin".equals(user_info[3]) && !searchbar.getText().equals(Username)) {
                     edit_button.setEnabled(false);
                     save_button.setEnabled(false);
                 }
