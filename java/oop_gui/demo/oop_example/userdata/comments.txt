@@ -1,6 +1,0 @@
-testn :  Hello World
-poig :  No, there will be no world in the future, it is going to end.
-test :  what is your name
-admin :  yah, becaue chaos is going to end because of entropy theory.
-poig :  yah, the second law of thermodynamics, when we breath and be alive is actually pushing the process, we should always be grateful to the beauty of nature.
-test :  ok

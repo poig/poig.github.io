@@ -1,14 +1,15 @@
 package main;
 
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.io.File;
+import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import user_function.data;
+import java.io.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -41,17 +42,35 @@ public class main {
         System.out.println("width, height: " + width + ", " + height);
         frame.setSize(width, height);
 
-        File userdata = new File("userdata/dictionary.txt");
+        //URL url = main.class.getProtectionDomain().getCodeSource().getLocation();
+        //String jarPath = url.getPath();
+        URL url = main.class.getProtectionDomain().getCodeSource().getLocation();
+        String jarPath = url.getPath();
+        File jarFile = new File(jarPath);
+        String parentDir = jarFile.getParent();
+        //System.out.println(parentDir+"\\userdata\\comments.txt");
+
+        String userdata_dict = "/userdata/user_dictionary.txt";
+        // origin: jarPath + userdata_dict
+
+        File userdata = new File(parentDir + userdata_dict);
         if (!userdata.exists()) {
-            data.user_register("admin", "admin", "admin@gmail.com", "admin");
+            new data().user_register("admin", "admin", "admin@gmail.com", "admin");
+            new data().user_register("user1", "user1", "user1@gmail.com", "user");
+            new data().user_register("miao", "miao", "miao@gmail.com", "user");
         }
-        
-        
-        File userdatas = new File("userdata/comments.txt");
+
+        File userdatas = new File(parentDir + "/userdata/comments.txt");
         if (!userdatas.exists()) {
-            new data().user_comment("");
+            String sample_comment = "testn :  Hello World\n"
+                    + "poig :  No, there will be no world in the future, it is going to end.\n"
+                    + "test :  what is your name\n"
+                    + "admin :  yah, becaue chaos is going to end because of entropy theory.\n"
+                    + "poig :  yah, the second law of thermodynamics, when we breath and be alive is actually pushing the process, we should always be grateful to the beauty of nature.\n"
+                    + "test :  ok";
+            new data().user_comment(sample_comment);
         }
-        
+
         new LoginPanel(frame, width);
 
         frame.setVisible(true);

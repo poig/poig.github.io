@@ -78,6 +78,7 @@ public class LoginPanel {
                 JOptionPane.showMessageDialog(frame, format_txt("username don't exist"));
             }
         });
+        
         // create register button
         constraints.gridx = 0;
         constraints.gridy = 3;

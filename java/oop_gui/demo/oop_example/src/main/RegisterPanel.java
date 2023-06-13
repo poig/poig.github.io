@@ -124,7 +124,7 @@ public class RegisterPanel extends JPanel {
                     } else if (gmail_list.contains(gmail)) {
                         JOptionPane.showMessageDialog(frame, format_txt("Gmail already exist."));
                     } else {
-                        data.user_register(username, new String(password), gmail, "user");
+                        new data().user_register(username, new String(password), gmail, "user");
                         JOptionPane.showMessageDialog(frame, format_txt("Congrat!!! You Registered, return to login page."));
                         // display login screen
                         frame.getContentPane().removeAll();

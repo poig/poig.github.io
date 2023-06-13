@@ -610,7 +610,7 @@ public class quiz extends JPanel {
         nextButton.addActionListener((ActionEvent e) -> {
             // display registration screen
             if (optionsGroup.getSelection() == null) {
-                JLabel empty_msg = new JLabel("Where is your answer!");
+                JLabel empty_msg = new JLabel("Please select your answer");
                 empty_msg.setFont(font);
                 JOptionPane.showMessageDialog(this, empty_msg);
             } else {
@@ -620,7 +620,7 @@ public class quiz extends JPanel {
                     JOptionPane.showMessageDialog(quiz, correct_msg);
                     score++;
                 } else {
-                    JLabel wrong_msg = new JLabel("Incorrect answer\n" + "the answer is " + answers[ques_type][currentQuestion]);
+                    JLabel wrong_msg = new JLabel("Incorrect answer, " + "\n"+ "the answer is " + answers[ques_type][currentQuestion]);
                     wrong_msg.setFont(font);
                     JOptionPane.showMessageDialog(quiz, wrong_msg);
                 }
