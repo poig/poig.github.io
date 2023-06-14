@@ -73,8 +73,8 @@ public class Profile extends JFrame {
         profile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         // for user-log
         System.out.println("Enter profile");
-        width = (int) (width * 0.6);
-        height = (int) (height * 0.6);
+        width = (int) (width * 0.8);
+        height = (int) (height * 0.8);
         profile.setSize(width, height);
         profile.setTitle("Profile"); // set title here
 
@@ -186,7 +186,7 @@ public class Profile extends JFrame {
             if (userinfo[0] == "None") {
                 JOptionPane.showMessageDialog(profile, format_txt("user not exist"));
             } else {
-                textField_for_naming.setText(userinfo[0]);
+                textField_for_naming.setText(searchbar.getText());
                 textField_for_email.setText(userinfo[1]);
                 textField_for_bio.setText(userinfo[2].replace("|", "\n"));
 
@@ -224,9 +224,14 @@ public class Profile extends JFrame {
             if (textField_for_bio.getText().contains(";") || textField_for_bio.getText().contains(":") || textField_for_bio.getText().contains("|") || textField_for_bio.getText().contains("\\")) {
                 JOptionPane.showMessageDialog(profile, format_txt("Bio can't include |, : and ;"));
             } else {
+                String result;
 
                 // do something
-                String result = new data().profile_save(Username, textField_for_naming.getText(), textField_for_email.getText(), textField_for_bio.getText().replace("\n", "|"));
+                if (textField_for_naming.getText() == Username) {
+                    result = new data().profile_save(Username, textField_for_naming.getText(), textField_for_email.getText(), textField_for_bio.getText().replace("\n", "|"));
+                } else {
+                    result = new data().profile_save(searchbar.getText(), textField_for_naming.getText(), textField_for_email.getText(), textField_for_bio.getText().replace("\n", "|"));
+                }
                 if (result == "email exist") {
                     JOptionPane.showMessageDialog(profile, format_txt("Email already exist"));
                 } else if (result == "email format") {

@@ -45,7 +45,7 @@ public class quiz extends JPanel {
         {"Do you know what Sustainable Development Goals (SDGs) is related to sustainable fashion?",
             "SDG 12: Responsible Consumption and Production",
             "SDG 7: Affordable and Clean Energy",
-            "OSDG 9: Industry, Innovation and Infrastructure"},
+            "SDG 9: Industry, Innovation and Infrastructure"},
         // question 4
         {"The fashion industry contributes to environmental degradation in which of the following ways?",
             "Deforestation",
@@ -338,7 +338,7 @@ public class quiz extends JPanel {
             // answer for quesiton 2
             "4%",
             // answer for question 3
-            "3",
+            "SDG 12: Responsible Consumption and Production",
             //q4
             "All of the above",
             //q5
@@ -346,11 +346,11 @@ public class quiz extends JPanel {
             //q6
             "Adidas",
             //q7
-            "Make people feel more comfortable about the clothes they are wearing",
+            "Makes people feel more comfortable about the clothes they are wearing",
             //q8
             "All of the above",
             //q9
-            "Less than 1%",
+            "Less than 1 %",
             //q10
             "Claims of environmental sustainability by a brand that are false or misleading"},
         //answer for the global warming
@@ -376,11 +376,11 @@ public class quiz extends JPanel {
             "Carbon dioxide"},
         //answer for sustainable lifestyle
         //answer for question 1
-        {"A method of reducing one's carbon footprint",
+        {"A method of reducing one’s carbon footprint.",
             //answer for question 2
-            "Continue switching on lights and unplug devices when you're not using them",
+            "Continue switching on lights and unplug devices when you’re not using them.",
             //answer for question 3
-            "To develop renewable energy technologiess",
+            "To develop renewable energy technologies",
             //answer for question 4
             "SDG 1: No Poverty",
             //answer for question 5
