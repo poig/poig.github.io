@@ -219,7 +219,7 @@ public class data {
             }
             if (gmail.contains("@")) {
                 if (!gmail_list.contains(gmail)) {
-                    try (FileWriter writer = new FileWriter(new File(parentDir + userdata_dict).getPath(), true);){
+                    try (FileWriter writer = new FileWriter(new File(parentDir + userdata_dict).getPath(), true);) {
                         empty_user.put(newname, new user_profile(user_value.password, gmail, user_value.admin, bio));
                         // save
                         //File userdata = new File(parentDir + userdata_dict);
@@ -246,6 +246,5 @@ public class data {
         }
 
     }
-
 
 }

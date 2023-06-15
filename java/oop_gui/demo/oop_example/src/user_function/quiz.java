@@ -581,7 +581,9 @@ public class quiz extends JPanel {
 
         // answer component
         optionsGroup = new ButtonGroup();
-        for (int i = 1; i < questions[ques_type][currentQuestion].length; i++) {
+        int i = 1;
+        do {
+            //for (int i = 1; i < questions[ques_type][currentQuestion].length; i++) {
             JRadioButton option = new JRadioButton(questions[ques_type][currentQuestion][i]);
             option.setFont(font);
             constraints.gridy = grid_pos;
@@ -590,7 +592,8 @@ public class quiz extends JPanel {
             option.setActionCommand(questions[ques_type][currentQuestion][i]);
             optionsGroup.add(option);
             grid_pos++;
-        }
+            i++;
+        } while (i < questions[ques_type][currentQuestion].length);
 
         // next button component
         nextButton = new JButton("Submit");
@@ -620,7 +623,7 @@ public class quiz extends JPanel {
                     JOptionPane.showMessageDialog(quiz, correct_msg);
                     score++;
                 } else {
-                    JLabel wrong_msg = new JLabel("Incorrect answer, " + "\n"+ "the answer is " + answers[ques_type][currentQuestion]);
+                    JLabel wrong_msg = new JLabel("Incorrect answer, " + "\n" + "the answer is " + answers[ques_type][currentQuestion]);
                     wrong_msg.setFont(font);
                     JOptionPane.showMessageDialog(quiz, wrong_msg);
                 }
@@ -662,6 +665,5 @@ public class quiz extends JPanel {
     public void addQuizWindowListener(WindowListener listener) {
         this.quiz.addWindowListener(listener);
     }
-
 
 }

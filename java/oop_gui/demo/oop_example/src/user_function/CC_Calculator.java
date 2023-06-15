@@ -169,27 +169,25 @@ public class CC_Calculator {
 
         // Calculate button action
         calculateButton.addActionListener(e -> {
-            try{
+            try {
                 double milesDriven = Double.parseDouble(milesField.getText());
                 double fuelEfficiency = Double.parseDouble(efficiencyField.getText());
                 double carbonEmissionsFactor = Double.parseDouble(emissionsField.getText());
-                
+
                 double gallonsConsumed = milesDriven / fuelEfficiency;
                 double carbonConsumed = gallonsConsumed * carbonEmissionsFactor;
 
                 set_result(milesDriven, fuelEfficiency, carbonEmissionsFactor, gallonsConsumed, carbonConsumed);
-            } catch (NumberFormatException ee){
+            } catch (NumberFormatException ee) {
                 label.setText("* Enter only numeric floating digits(0-9)");
             }
 
-                
-            
-            });
+        });
 
         // Set the JFrame visible
         calculator.setVisible(true);
-            calculator.setLocationRelativeTo(null); // Center the frame on the screen
-        }
+        calculator.setLocationRelativeTo(null); // Center the frame on the screen
+    }
 
     public void addWindowListener(WindowListener listener) {
         this.calculator.addWindowListener(listener);

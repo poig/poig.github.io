@@ -1,6 +1,5 @@
 package main;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,8 +8,9 @@ import java.util.List;
 import user_function.data;
 
 public class RegisterPanel extends JPanel {
-    
+
     Font font;
+
     private JLabel format_txt(String txt) {
         JLabel msg = new JLabel(txt);
         msg.setFont(font);
@@ -98,19 +98,12 @@ public class RegisterPanel extends JPanel {
                 //todo: logic for adding new user
                 String[] result = new data().user_readout(username);
                 List<String> gmail_list = new data().gmail_list();
-                // Normalize the input string
-                gmail = gmail.replaceAll("[^\\p{Alnum}]", "");
-                // Normalize the strings in the gmail_list
-                for (int i = 0; i < gmail_list.size(); i++) {
-                    String normalized = gmail_list.get(i).replaceAll("[^\\p{Alnum}]", "");
-                    gmail_list.set(i, normalized);
-                }
 
                 if (username.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, format_txt("Please Enter your username."));
                 } else if (gmail.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, format_txt("Please Enter your Email."));
-                } else if (!gmail.contains("@".replaceAll("[^\\p{Alnum}]", ""))) {
+                } else if (!gmail.contains("@")) {
                     JOptionPane.showMessageDialog(frame, format_txt("Please Enter correct Email format."));
                 } else if (password.length == 0) {
                     JOptionPane.showMessageDialog(frame, format_txt("Please Enter Your password."));
